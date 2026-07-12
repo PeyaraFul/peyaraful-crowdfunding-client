@@ -26,9 +26,11 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-bold text-center mb-6">Create Account</h2>
+    <div className="flex items-center justify-center min-h-[calc(100vh-64px)] p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-peyara-accent p-8">
+        <h2 className="text-2xl font-bold text-center mb-6 text-peyara-dark">
+          Create Account
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -40,7 +42,7 @@ export default function RegisterPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-peyara-primary bg-peyara-bg/50"
               placeholder="Enter your name"
             />
           </div>
@@ -54,7 +56,7 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-peyara-primary bg-peyara-bg/50"
               placeholder="Enter your email"
             />
           </div>
@@ -68,7 +70,7 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-peyara-primary bg-peyara-bg/50"
               placeholder="Enter your password"
             />
           </div>
@@ -81,7 +83,7 @@ export default function RegisterPage() {
               type="url"
               value={photo}
               onChange={(e) => setPhoto(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-peyara-primary bg-peyara-bg/50"
               placeholder="https://example.com/photo.jpg"
             />
           </div>
@@ -93,7 +95,7 @@ export default function RegisterPage() {
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-peyara-primary bg-peyara-bg/50"
             >
               <option value="supporter">Supporter</option>
               <option value="creator">Creator</option>
@@ -103,7 +105,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+            className="w-full py-2.5 bg-peyara-primary text-peyara-dark rounded-lg hover:bg-peyara-dark hover:text-white transition disabled:opacity-50 font-semibold"
           >
             {loading ? "Creating account..." : "Register"}
           </button>
@@ -111,7 +113,7 @@ export default function RegisterPage() {
 
         <p className="text-center mt-6 text-sm text-gray-600">
           Already have an account?{" "}
-          <Link href="/login" className="text-blue-600 hover:underline">
+          <Link href="/login" className="text-peyara-primary font-semibold hover:underline">
             Login
           </Link>
         </p>
