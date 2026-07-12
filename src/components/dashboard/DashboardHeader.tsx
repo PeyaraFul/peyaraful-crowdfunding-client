@@ -23,7 +23,7 @@ export default function DashboardHeader({ user, onMenuClick }: DashboardHeaderPr
   useEffect(() => {
     if (user?.email) {
       axiosInstance
-        .get(`/notifications/${user.email}`)
+        .get("/notifications")
         .then((res) => {
           setNotifications(res.data);
           setUnread(res.data.length);
