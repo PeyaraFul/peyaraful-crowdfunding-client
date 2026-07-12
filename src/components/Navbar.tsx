@@ -23,7 +23,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* logo */}
           <Link href="/" className="text-xl font-bold text-peyara-dark">
-            Peyaraful
+            Peyaraful Crowdfunding
           </Link>
 
           {/* desktop menu */}

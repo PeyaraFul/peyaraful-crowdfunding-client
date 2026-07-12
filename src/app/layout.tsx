@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Peyaraful - Crowdfunding Platform",
+  title: "Peyaraful Crowdfunding",
   description: "A crowdfunding platform to fund creative projects",
 };
 

@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* brand */}
           <div>
-            <h3 className="text-xl font-bold mb-3">Peyaraful</h3>
+            <h3 className="text-xl font-bold mb-3">Peyaraful Crowdfunding</h3>
             <p className="text-peyara-primary/80 text-sm">
               Empowering creators and supporters to bring amazing projects to life through crowdfunding.
             </p>
@@ -68,7 +68,7 @@ export default function Footer() {
 
         {/* bottom */}
         <div className="mt-10 pt-6 border-t border-white/20 text-center text-sm text-peyara-primary/60">
-          &copy; {new Date().getFullYear()} Peyaraful. All rights reserved.
+          &copy; {new Date().getFullYear()} Peyaraful Crowdfunding. All rights reserved.
         </div>
       </div>
     </footer>

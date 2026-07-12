@@ -26,7 +26,7 @@ export default function LoginPage() {
     <div className="flex items-center justify-center min-h-[calc(100vh-64px)] p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-peyara-accent p-8">
         <h2 className="text-2xl font-bold text-center mb-6 text-peyara-dark">
-          Login to Peyaraful
+          Login to Peyaraful Crowdfunding
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
