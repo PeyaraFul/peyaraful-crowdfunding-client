@@ -51,10 +51,19 @@ const adminLinks = [
 export default function Sidebar({ user, isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
 
+  // detect role from URL path so sidebar works even without login
+  const roleFromPath = pathname.includes("/admin")
+    ? "admin"
+    : pathname.includes("/creator")
+    ? "creator"
+    : "supporter";
+
+  const role = user?.role || roleFromPath;
+
   const links =
-    user?.role === "admin"
+    role === "admin"
       ? adminLinks
-      : user?.role === "creator"
+      : role === "creator"
       ? creatorLinks
       : supporterLinks;
 
