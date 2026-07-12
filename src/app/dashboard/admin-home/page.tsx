@@ -18,14 +18,16 @@ export default function AdminHome() {
     // fetch users to count roles
     Promise.all([
       axiosInstance.get("/campaigns/all"),
+      axiosInstance.get("/users"),
     ])
-      .then(([campRes]) => {
+      .then(([campRes, usersRes]) => {
         const campaigns = campRes.data || [];
+        const users = usersRes.data || [];
         setStats({
-          supporters: 0,
-          creators: 0,
+          supporters: users.filter((u: any) => u.role === "supporter").length,
+          creators: users.filter((u: any) => u.role === "creator").length,
           campaigns: campaigns.length,
-          totalCredits: 0,
+          totalCredits: users.reduce((sum: number, u: any) => sum + (u.credits || 0), 0),
         });
       })
       .catch(() => {})

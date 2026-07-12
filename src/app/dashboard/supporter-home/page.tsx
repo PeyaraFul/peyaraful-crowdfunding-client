@@ -14,7 +14,7 @@ export default function SupporterHome() {
   useEffect(() => {
     axiosInstance
       .get("/contributions/mine?page=1&limit=5")
-      .then((res) => setContributions(res.data.contributions || []))
+      .then((res) => setContributions(res.data.data || []))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);

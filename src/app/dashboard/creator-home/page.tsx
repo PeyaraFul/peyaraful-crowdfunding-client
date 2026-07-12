@@ -34,7 +34,17 @@ export default function CreatorHome() {
     try {
       await axiosInstance.put(`/contributions/${id}/approve`);
       toast.success("Contribution approved!");
+      const approvedContrib = pending.find((c) => c._id === id);
       setPending((prev) => prev.filter((c) => c._id !== id));
+      if (approvedContrib) {
+        setCampaigns((prev) =>
+          prev.map((c) =>
+            c._id === approvedContrib.campaign_id
+              ? { ...c, amount_raised: c.amount_raised + approvedContrib.amount }
+              : c
+          )
+        );
+      }
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Failed.");
     }

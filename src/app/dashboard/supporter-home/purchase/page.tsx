@@ -34,8 +34,8 @@ export default function PurchaseCreditsPage() {
       });
 
       // update user credits
-      if (res.data.user) {
-        setUser(res.data.user);
+      if (res.data.credits !== undefined && user) {
+        setUser({ ...user, credits: res.data.credits });
       }
 
       toast.success(`Successfully purchased ${credits} credits!`);

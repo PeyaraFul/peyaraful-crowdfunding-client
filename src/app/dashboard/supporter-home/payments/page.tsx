@@ -10,7 +10,7 @@ export default function PaymentHistoryPage() {
 
   useEffect(() => {
     axiosInstance
-      .get("/payments/history")
+      .get("/credits/history")
       .then((res) => setPayments(res.data))
       .catch(() => {})
       .finally(() => setLoading(false));

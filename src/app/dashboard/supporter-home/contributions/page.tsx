@@ -15,7 +15,7 @@ export default function MyContributionsPage() {
     axiosInstance
       .get(`/contributions/mine?page=${p}&limit=5`)
       .then((res) => {
-        setContributions(res.data.contributions || []);
+        setContributions(res.data.data || []);
         setTotalPages(res.data.totalPages || 1);
       })
       .catch(() => {})
