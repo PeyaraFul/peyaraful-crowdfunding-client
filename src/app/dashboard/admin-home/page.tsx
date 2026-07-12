@@ -8,8 +8,8 @@ export default function AdminHome() {
   const { user } = useAuth();
 
   return (
-    <ProtectedRoute allowedRoles={["admin"]}>
-      <DashboardLayout>
+    // <ProtectedRoute allowedRoles={["admin"]}>
+    <DashboardLayout>
         <h1 className="text-2xl font-bold text-peyara-dark mb-4">
           Welcome back, {user?.name}!
         </h1>
@@ -24,6 +24,6 @@ export default function AdminHome() {
           </div>
         </div>
       </DashboardLayout>
-    </ProtectedRoute>
+    // </ProtectedRoute>
   );
 }

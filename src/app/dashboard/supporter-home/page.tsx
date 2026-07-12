@@ -8,8 +8,8 @@ export default function SupporterHome() {
   const { user } = useAuth();
 
   return (
-    <ProtectedRoute allowedRoles={["supporter"]}>
-      <DashboardLayout>
+    // <ProtectedRoute allowedRoles={["supporter"]}>
+    <DashboardLayout>
         <h1 className="text-2xl font-bold text-peyara-dark mb-4">
           Welcome back, {user?.name}!
         </h1>
@@ -24,6 +24,6 @@ export default function SupporterHome() {
           </div>
         </div>
       </DashboardLayout>
-    </ProtectedRoute>
+    // </ProtectedRoute>
   );
 }
