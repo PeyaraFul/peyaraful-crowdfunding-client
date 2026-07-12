@@ -52,7 +52,8 @@ export default function AddCampaignPage() {
 
   return (
     <DashboardLayout>
-      <h1 className="text-2xl font-bold text-peyara-dark mb-6">Add New Campaign</h1>
+      <div className="max-w-5xl mx-auto">
+      <h1 className="text-2xl font-bold text-peyara-dark mb-6 text-center">Add New Campaign</h1>
 
       <form
         onSubmit={handleSubmit}
@@ -202,6 +203,7 @@ export default function AddCampaignPage() {
           </div>
         </div>
       </form>
+      </div>
     </DashboardLayout>
   );
 }
