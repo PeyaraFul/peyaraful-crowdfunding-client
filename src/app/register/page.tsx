@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -19,6 +20,17 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     const success = await register(name, email, password, photo, role);
+
+
+    const { data, error } = await authClient.signUp.email({
+    name: "John Doe", // required
+    email: "john.doe@example.com", // required
+    password: "password1234", // required
+    image: "https://example.com/image.png",
+    callbackURL: "https://example.com/callback",
+});
+
+
     setLoading(false);
     if (success) {
       router.push("/");
@@ -104,6 +116,7 @@ export default function RegisterPage() {
 
           <button
             type="submit"
+            onClick={handleSubmit}
             disabled={loading}
             className="w-full py-2.5 bg-peyara-primary text-peyara-dark rounded-lg hover:bg-peyara-dark hover:text-white transition disabled:opacity-50 font-semibold"
           >

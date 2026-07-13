@@ -19,7 +19,9 @@ export default function ManageUsersPage() {
     axiosInstance
       .get("/users")
       .then((res) => setUsers(res.data))
-      .catch(() => {})
+      .catch((err) => {
+        toast.error(err.response?.data?.message || "Failed to load users.");
+      })
       .finally(() => setLoading(false));
   };
 

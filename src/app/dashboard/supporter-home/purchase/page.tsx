@@ -15,7 +15,7 @@ const packages = [
 ];
 
 export default function PurchaseCreditsPage() {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [selectedPkg, setSelectedPkg] = useState<number | null>(null);
 
@@ -23,25 +23,19 @@ export default function PurchaseCreditsPage() {
     setSelectedPkg(credits);
     setLoading(true);
 
-    // simulate Stripe checkout success (client-side only)
-    // in real app, this would open Stripe Checkout
-    // for now, we call the API directly to simulate success
     try {
-      const res = await axiosInstance.post("/credits/purchase", {
+      const res = await axiosInstance.post("/stripe/create-checkout-session", {
+        credits,
         amount: price,
-        credits: credits,
-        transactionId: "txn_" + Date.now(),
       });
 
-      // update user credits
-      if (res.data.credits !== undefined && user) {
-        setUser({ ...user, credits: res.data.credits });
+      if (res.data.url) {
+        window.location.href = res.data.url;
+      } else {
+        toast.error("Failed to create checkout session.");
       }
-
-      toast.success(`Successfully purchased ${credits} credits!`);
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Purchase failed.");
-    } finally {
       setLoading(false);
       setSelectedPkg(null);
     }
@@ -49,8 +43,15 @@ export default function PurchaseCreditsPage() {
 
   return (
     <DashboardLayout>
-      <h1 className="text-2xl font-bold text-peyara-dark mb-2">Purchase Credits</h1>
-      <p className="text-gray-500 mb-8">Current balance: <span className="font-bold text-peyara-dark">{user?.credits || 0} credits</span></p>
+      <h1 className="text-2xl font-bold text-peyara-dark mb-2">
+        Purchase Credits
+      </h1>
+      <p className="text-gray-500 mb-8">
+        Current balance:{" "}
+        <span className="font-bold text-peyara-dark">
+          {user?.credits || 0} credits
+        </span>
+      </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {packages.map((pkg) => (
@@ -68,7 +69,10 @@ export default function PurchaseCreditsPage() {
               </span>
             )}
 
-            <FiCreditCard className="mx-auto mb-3 text-peyara-primary" size={36} />
+            <FiCreditCard
+              className="mx-auto mb-3 text-peyara-primary"
+              size={36}
+            />
 
             <p className="text-3xl font-bold text-peyara-dark mb-1">
               {pkg.credits.toLocaleString()}
@@ -106,7 +110,9 @@ export default function PurchaseCreditsPage() {
                   : "bg-peyara-bg text-peyara-dark hover:bg-peyara-primary border border-peyara-accent"
               }`}
             >
-              {loading && selectedPkg === pkg.credits ? "Processing..." : `Buy for $${pkg.price}`}
+              {loading && selectedPkg === pkg.credits
+                ? "Redirecting..."
+                : `Buy for $${pkg.price}`}
             </button>
           </div>
         ))}
