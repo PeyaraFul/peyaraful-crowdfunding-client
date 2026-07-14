@@ -21,10 +21,15 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const success = await login(email.trim(), password);
+      const loginUser = await login(email.trim(), password);
 
-      if (success) {
-        router.push("/");
+      if (loginUser) {
+        const redirectMap: Record<string, string> = {
+          supporter: "/dashboard/supporter-home",
+          creator: "/dashboard/creator-home",
+          admin: "/dashboard/admin-home",
+        };
+        router.push(redirectMap[loginUser.role] || "/");
         router.refresh();
       }
     } catch (err) {
