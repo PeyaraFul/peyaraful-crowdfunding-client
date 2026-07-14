@@ -63,26 +63,8 @@ export default function DashboardHeader({ user, onMenuClick }: DashboardHeaderPr
         </h2>
       </div>
 
-      {/* right: avatar + credits + notifications + logout */}
+      {/* right: credits + notifications + logout */}
       <div className="flex items-center gap-4">
-        {/* avatar */}
-        {user && (
-          <div className="flex items-center gap-2">
-            {user.photo ? (
-              <img
-                src={user.photo}
-                alt={user.name}
-                className="w-8 h-8 rounded-full object-cover ring-2 ring-peyara-primary"
-              />
-            ) : (
-              <div className="w-8 h-8 rounded-full bg-peyara-primary flex items-center justify-center text-white text-sm font-bold">
-                {user.name?.charAt(0).toUpperCase()}
-              </div>
-            )}
-            <span className="text-sm font-medium text-gray-700 hidden md:block">{user.name}</span>
-          </div>
-        )}
-
         {/* credits */}
         {user && (
           <div className="hidden sm:flex items-center gap-1 px-3 py-1 bg-peyara-bg rounded-full border border-peyara-accent">
