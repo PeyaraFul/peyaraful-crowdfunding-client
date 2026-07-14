@@ -36,6 +36,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // listen for 401 logout event from axios interceptor
+  useEffect(() => {
+    const handleLogout = () => {
+      setUser(null);
+      toast.error("Session expired. Please log in again.");
+    };
+    window.addEventListener("auth:logout", handleLogout);
+    return () => window.removeEventListener("auth:logout", handleLogout);
+  }, []);
+
   // reload persistence - load user from token on mount
   useEffect(() => {
     const token = localStorage.getItem("access-token");

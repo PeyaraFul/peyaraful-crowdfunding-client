@@ -19,21 +19,29 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const success = await register(name, email, password, photo, role);
+    try {
+      const success = await register(name, email, password, photo, role);
 
+      if (success) {
+        const { data, error } = await authClient.signUp.email({
+          name,
+          email,
+          password,
+          image: photo,
+          callbackURL: "/",
+        });
+        if (error) {
+          console.error("better-auth signup error:", error);
+        }
+      }
 
-    const { data, error } = await authClient.signUp.email({
-    name: "John Doe", // required
-    email: "john.doe@example.com", // required
-    password: "password1234", // required
-    image: "https://example.com/image.png",
-    callbackURL: "https://example.com/callback",
-});
-
-
-    setLoading(false);
-    if (success) {
-      router.push("/");
+      if (success) {
+        router.push("/");
+      }
+    } catch (err) {
+      console.error("Registration failed:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -116,7 +124,6 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            onClick={handleSubmit}
             disabled={loading}
             className="w-full py-2.5 bg-peyara-primary text-peyara-dark rounded-lg hover:bg-peyara-dark hover:text-white transition disabled:opacity-50 font-semibold"
           >
