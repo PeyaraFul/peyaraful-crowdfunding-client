@@ -98,6 +98,13 @@ export default function WithdrawalsPage() {
               <p className="text-xs text-gray-500 mb-1">Estimated Earnings</p>
               <p className="font-semibold text-peyara-dark">${earnableDollars.toFixed(2)} USD</p>
             </div>
+            {totalRaised < 200 && (
+              <div className="bg-peyara-secondary/10 rounded-lg p-4 border border-peyara-secondary/30">
+                <p className="text-sm font-semibold text-peyara-secondary">
+                  Insufficient raised credits. You need at least 200 credits to withdraw.
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

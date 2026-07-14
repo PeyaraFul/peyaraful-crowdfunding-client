@@ -32,7 +32,7 @@ const supporterLinks = [
 
 const creatorLinks = [
   { label: "Home", href: "/dashboard/creator-home", icon: FiHome },
-  { label: "Add Campaign", href: "/dashboard/creator-home/add-campaign", icon: FiPlusCircle },
+  { label: "Add New Campaign", href: "/dashboard/creator-home/add-campaign", icon: FiPlusCircle },
   { label: "My Campaigns", href: "/dashboard/creator-home/my-campaigns", icon: FiList },
   { label: "Contributions", href: "/dashboard/creator-home/contributions", icon: FiCreditCard },
   { label: "Withdrawals", href: "/dashboard/creator-home/withdrawals", icon: FiDollarSign },

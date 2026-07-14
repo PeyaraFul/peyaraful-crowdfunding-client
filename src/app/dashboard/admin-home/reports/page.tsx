@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import axiosInstance from "@/lib/axios";
 import { toast } from "react-toastify";
-import { FiTrash2 } from "react-icons/fi";
+import { FiTrash2, FiSlash } from "react-icons/fi";
 
 export default function AdminReportsPage() {
   const [reports, setReports] = useState<any[]>([]);
@@ -26,6 +26,17 @@ export default function AdminReportsPage() {
       setReports((prev) => prev.filter((r) => r.campaign_id !== campaignId));
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Failed.");
+    }
+  };
+
+  const handleSuspendCampaign = async (campaignId: string) => {
+    if (!confirm("Suspend this campaign? It will be rejected and hidden.")) return;
+    try {
+      await axiosInstance.put(`/campaigns/${campaignId}/status`, { status: "rejected" });
+      toast.success("Campaign suspended.");
+      setReports((prev) => prev.filter((r) => r.campaign_id !== campaignId));
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || "Failed to suspend.");
     }
   };
 
@@ -62,13 +73,22 @@ export default function AdminReportsPage() {
                       {new Date(r.date).toLocaleDateString()}
                     </td>
                     <td className="py-3 px-2">
-                      <button
-                        onClick={() => handleDeleteCampaign(r.campaign_id)}
-                        className="p-1.5 text-peyara-secondary hover:opacity-70 transition"
-                        title="Delete Campaign"
-                      >
-                        <FiTrash2 size={16} />
-                      </button>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleSuspendCampaign(r.campaign_id)}
+                          className="p-1.5 text-yellow-600 hover:opacity-70 transition"
+                          title="Suspend Campaign"
+                        >
+                          <FiSlash size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteCampaign(r.campaign_id)}
+                          className="p-1.5 text-peyara-secondary hover:opacity-70 transition"
+                          title="Delete Campaign"
+                        >
+                          <FiTrash2 size={16} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

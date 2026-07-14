@@ -17,7 +17,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<User | null>;
-  register: (name: string, email: string, password: string, photo: string, role: string) => Promise<boolean>;
+  register: (name: string, email: string, password: string, photo: string, role: string) => Promise<User | null>;
   logout: () => void;
   setUser: (user: User | null) => void;
 }
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     password: string,
     photo: string,
     role: string
-  ): Promise<boolean> => {
+  ): Promise<User | null> => {
     try {
       const res = await axiosInstance.post("/auth/register", {
         name,
@@ -97,10 +97,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem("access-token", res.data.token);
       setUser(res.data.user);
       toast.success("Registration successful!");
-      return true;
+      return res.data.user;
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Registration failed.");
-      return false;
+      return null;
     }
   };
 

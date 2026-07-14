@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import axiosInstance from "@/lib/axios";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiArrowRight } from "react-icons/fi";
 
 export default function ExplorePage() {
   const [campaigns, setCampaigns] = useState<any[]>([]);
@@ -101,7 +101,7 @@ export default function ExplorePage() {
               <Link
                 key={campaign._id}
                 href={`/campaign/${campaign._id}`}
-                className="bg-white rounded-xl shadow-md border border-peyara-accent overflow-hidden hover:shadow-lg transition"
+                className="group bg-white rounded-xl shadow-md border border-peyara-accent overflow-hidden hover:shadow-lg transition"
               >
                 <div className="h-48 bg-peyara-accent/30 flex items-center justify-center overflow-hidden">
                   {campaign.image_url ? (
@@ -138,6 +138,9 @@ export default function ExplorePage() {
                     <span className="text-gray-500">
                       of ${campaign.funding_goal.toLocaleString()}
                     </span>
+                  </div>
+                  <div className="mt-3 flex items-center justify-center gap-1 text-peyara-primary font-semibold text-sm group-hover:gap-2 transition-all">
+                    View Details <FiArrowRight size={14} />
                   </div>
                 </div>
               </Link>

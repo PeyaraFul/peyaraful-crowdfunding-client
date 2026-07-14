@@ -32,16 +32,16 @@ export default function Navbar() {
               Home
             </Link>
             <Link href="/explore" className="text-gray-700 hover:text-peyara-primary transition font-medium">
-              Explore
+              Explore Campaigns
             </Link>
             <a
-              href="https://github.com/PeyaraFul"
+              href="https://github.com/PeyaraFul/peyaraful-crowdfunding-client"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-700 hover:text-peyara-primary transition flex items-center gap-1 font-medium"
             >
               <FiGithub size={18} />
-              GitHub
+              Join as Developer
             </a>
 
             {user ? (
@@ -52,6 +52,9 @@ export default function Navbar() {
                 >
                   Dashboard
                 </Link>
+                <span className="px-3 py-1 text-xs font-semibold bg-peyara-primary/20 text-peyara-dark rounded-full">
+                  {user.credits} Credits
+                </span>
                 <div className="flex items-center gap-2">
                   {user.photo ? (
                     <img
@@ -117,16 +120,16 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="block text-gray-700 hover:text-peyara-primary transition py-2 font-medium"
             >
-              Explore
+              Explore Campaigns
             </Link>
             <a
-              href="https://github.com/PeyaraFul"
+              href="https://github.com/PeyaraFul/peyaraful-crowdfunding-client"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 text-gray-700 hover:text-peyara-primary transition py-2 font-medium"
             >
               <FiGithub size={18} />
-              GitHub
+              Join as Developer
             </a>
 
             <hr className="border-peyara-accent" />
@@ -146,6 +149,9 @@ export default function Navbar() {
                     </div>
                   )}
                   <span className="text-sm text-gray-600">{user.name}</span>
+                  <span className="px-2 py-0.5 text-xs font-semibold bg-peyara-primary/20 text-peyara-dark rounded-full ml-auto">
+                    {user.credits} Credits
+                  </span>
                 </div>
                 <Link
                   href={getDashboardLink()}

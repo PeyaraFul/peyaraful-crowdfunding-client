@@ -15,12 +15,14 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-// handle 401 responses
+// handle 401 responses (skip auth endpoints to avoid false "session expired" on login/register)
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      if (typeof window !== "undefined") {
+      const url = error.config?.url || "";
+      const isAuthEndpoint = url.includes("/auth/login") || url.includes("/auth/register");
+      if (!isAuthEndpoint && typeof window !== "undefined") {
         localStorage.removeItem("access-token");
         window.dispatchEvent(new Event("auth:logout"));
       }

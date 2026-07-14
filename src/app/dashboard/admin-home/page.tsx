@@ -9,24 +9,23 @@ export default function AdminHome() {
   const [stats, setStats] = useState({
     supporters: 0,
     creators: 0,
-    campaigns: 0,
+    payments: 0,
     totalCredits: 0,
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // fetch users to count roles
     Promise.all([
-      axiosInstance.get("/campaigns/all"),
+      axiosInstance.get("/credits/all"),
       axiosInstance.get("/users"),
     ])
-      .then(([campRes, usersRes]) => {
-        const campaigns = campRes.data || [];
+      .then(([paymentsRes, usersRes]) => {
+        const payments = paymentsRes.data || [];
         const users = usersRes.data || [];
         setStats({
           supporters: users.filter((u: any) => u.role === "supporter").length,
           creators: users.filter((u: any) => u.role === "creator").length,
-          campaigns: campaigns.length,
+          payments: payments.length,
           totalCredits: users.reduce((sum: number, u: any) => sum + (u.credits || 0), 0),
         });
       })
@@ -35,7 +34,7 @@ export default function AdminHome() {
   }, []);
 
   const cards = [
-    { label: "Total Campaigns", value: stats.campaigns, icon: FiList, color: "bg-peyara-primary/20" },
+    { label: "Total Payments", value: stats.payments, icon: FiDollarSign, color: "bg-peyara-primary/20" },
     { label: "Supporters", value: stats.supporters, icon: FiUsers, color: "bg-peyara-secondary/20" },
     { label: "Creators", value: stats.creators, icon: FiUsers, color: "bg-peyara-primary/20" },
     { label: "Credits Issued", value: stats.totalCredits, icon: FiCreditCard, color: "bg-peyara-secondary/20" },

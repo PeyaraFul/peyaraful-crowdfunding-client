@@ -20,6 +20,7 @@ export default function SupporterHome() {
   }, []);
 
   const approved = contributions.filter((c) => c.status === "approved");
+  const pending = contributions.filter((c) => c.status === "pending");
   const totalContributed = approved.reduce((sum, c) => sum + c.amount, 0);
 
   return (
@@ -29,7 +30,7 @@ export default function SupporterHome() {
       </h1>
 
       {/* stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-xl p-6 border border-peyara-accent flex items-center gap-4">
           <div className="w-12 h-12 bg-peyara-primary/20 rounded-full flex items-center justify-center">
             <FiDollarSign size={24} className="text-peyara-dark" />
@@ -49,11 +50,20 @@ export default function SupporterHome() {
           </div>
         </div>
         <div className="bg-white rounded-xl p-6 border border-peyara-accent flex items-center gap-4">
+          <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+            <FiList size={24} className="text-yellow-600" />
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">Pending</p>
+            <p className="text-2xl font-bold text-peyara-dark">{pending.length}</p>
+          </div>
+        </div>
+        <div className="bg-white rounded-xl p-6 border border-peyara-accent flex items-center gap-4">
           <div className="w-12 h-12 bg-peyara-primary/20 rounded-full flex items-center justify-center">
             <FiCheckCircle size={24} className="text-peyara-dark" />
           </div>
           <div>
-            <p className="text-sm text-gray-500">Total Contributed</p>
+            <p className="text-sm text-gray-500">Approved Contributed</p>
             <p className="text-2xl font-bold text-peyara-dark">{totalContributed} cr</p>
           </div>
         </div>
@@ -82,7 +92,7 @@ export default function SupporterHome() {
                 </tr>
               </thead>
               <tbody>
-                {contributions.map((c) => (
+                {approved.map((c) => (
                   <tr key={c._id} className="border-b border-peyara-accent/50 hover:bg-peyara-bg/50">
                     <td className="py-3 px-2 font-medium text-peyara-dark truncate max-w-[200px]">
                       {c.campaign_title}

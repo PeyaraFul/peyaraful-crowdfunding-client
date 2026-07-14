@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
-import { authClient } from "@/lib/auth-client";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -20,23 +19,15 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const success = await register(name, email, password, photo, role);
+      const regUser = await register(name, email, password, photo, role);
 
-      if (success) {
-        const { data, error } = await authClient.signUp.email({
-          name,
-          email,
-          password,
-          image: photo,
-          callbackURL: "/",
-        });
-        if (error) {
-          console.error("better-auth signup error:", error);
-        }
-      }
-
-      if (success) {
-        router.push("/");
+      if (regUser) {
+        const redirectMap: Record<string, string> = {
+          supporter: "/dashboard/supporter-home",
+          creator: "/dashboard/creator-home",
+        };
+        router.push(redirectMap[regUser.role] || "/");
+        router.refresh();
       }
     } catch (err) {
       console.error("Registration failed:", err);

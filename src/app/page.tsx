@@ -9,6 +9,7 @@ import axiosInstance from "@/lib/axios";
 import { FiTarget, FiUsers, FiDollarSign, FiHeart } from "react-icons/fi";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const banners = [
   {
@@ -120,23 +121,36 @@ export default function HomePage() {
 
       {/* Top Funded Campaigns */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 className="text-3xl font-bold text-center text-peyara-dark mb-2">
-          Top Funded Campaigns
-        </h2>
-        <p className="text-center text-gray-600 mb-10">Support the most popular projects</p>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-3xl font-bold text-center text-peyara-dark mb-2">
+            Top Funded Campaigns
+          </h2>
+          <p className="text-center text-gray-600 mb-10">Support the most popular projects</p>
+        </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {topCampaigns.length > 0 ? (
-            topCampaigns.map((campaign) => {
+            topCampaigns.map((campaign, index) => {
               const progress = Math.min(
                 (campaign.amount_raised / campaign.funding_goal) * 100,
                 100
               );
               return (
-                <Link
+                <motion.div
                   key={campaign._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                <Link
                   href={`/campaign/${campaign._id}`}
-                  className="bg-white rounded-xl shadow-md border border-peyara-accent overflow-hidden hover:shadow-lg transition"
+                  className="block bg-white rounded-xl shadow-md border border-peyara-accent overflow-hidden hover:shadow-lg transition"
                 >
                   <div className="h-48 bg-peyara-accent/30 flex items-center justify-center overflow-hidden">
                     {campaign.image_url ? (
@@ -170,6 +184,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </Link>
+                </motion.div>
               );
             })
           ) : (
@@ -189,33 +204,39 @@ export default function HomePage() {
       {/* How It Works */}
       <section className="bg-white py-16 border-y border-peyara-accent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-peyara-dark mb-2">
-            How It Works
-          </h2>
-          <p className="text-center text-gray-600 mb-10">Three simple steps to get started</p>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold text-center text-peyara-dark mb-2">
+              How It Works
+            </h2>
+            <p className="text-center text-gray-600 mb-10">Three simple steps to get started</p>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-peyara-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <FiTarget size={28} className="text-peyara-dark" />
-              </div>
-              <h3 className="font-bold text-lg mb-2 text-peyara-dark">1. Choose a Campaign</h3>
-              <p className="text-gray-600 text-sm">Browse through exciting projects and find one that speaks to you.</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-peyara-secondary rounded-full flex items-center justify-center mx-auto mb-4">
-                <FiHeart size={28} className="text-white" />
-              </div>
-              <h3 className="font-bold text-lg mb-2 text-peyara-dark">2. Back It</h3>
-              <p className="text-gray-600 text-sm">Purchase credits and contribute to help the project reach its goal.</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-peyara-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <FiDollarSign size={28} className="text-peyara-dark" />
-              </div>
-              <h3 className="font-bold text-lg mb-2 text-peyara-dark">3. See It Happen</h3>
-              <p className="text-gray-600 text-sm">Watch funded projects come to life and enjoy the rewards.</p>
-            </div>
+            {[
+              { icon: <FiTarget size={28} className="text-peyara-dark" />, bg: "bg-peyara-primary", title: "1. Choose a Campaign", desc: "Browse through exciting projects and find one that speaks to you." },
+              { icon: <FiHeart size={28} className="text-white" />, bg: "bg-peyara-secondary", title: "2. Back It", desc: "Purchase credits and contribute to help the project reach its goal." },
+              { icon: <FiDollarSign size={28} className="text-peyara-dark" />, bg: "bg-peyara-primary", title: "3. See It Happen", desc: "Watch funded projects come to life and enjoy the rewards." },
+            ].map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.15 }}
+                className="text-center p-6"
+              >
+                <div className={`w-16 h-16 ${step.bg} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                  {step.icon}
+                </div>
+                <h3 className="font-bold text-lg mb-2 text-peyara-dark">{step.title}</h3>
+                <p className="text-gray-600 text-sm">{step.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -224,26 +245,25 @@ export default function HomePage() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="bg-white rounded-xl p-6 border border-peyara-accent shadow-sm">
-              <FiUsers className="mx-auto mb-2 text-peyara-primary" size={32} />
-              <p className="text-3xl font-bold text-peyara-dark">500+</p>
-              <p className="text-gray-600 text-sm">Active Users</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 border border-peyara-accent shadow-sm">
-              <FiTarget className="mx-auto mb-2 text-peyara-secondary" size={32} />
-              <p className="text-3xl font-bold text-peyara-dark">120+</p>
-              <p className="text-gray-600 text-sm">Campaigns Funded</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 border border-peyara-accent shadow-sm">
-              <FiDollarSign className="mx-auto mb-2 text-peyara-primary" size={32} />
-              <p className="text-3xl font-bold text-peyara-dark">$50K+</p>
-              <p className="text-gray-600 text-sm">Total Raised</p>
-            </div>
-            <div className="bg-white rounded-xl p-6 border border-peyara-accent shadow-sm">
-              <FiHeart className="mx-auto mb-2 text-peyara-secondary" size={32} />
-              <p className="text-3xl font-bold text-peyara-dark">1000+</p>
-              <p className="text-gray-600 text-sm">Contributions</p>
-            </div>
+            {[
+              { icon: <FiUsers className="mx-auto mb-2 text-peyara-primary" size={32} />, value: "500+", label: "Active Users" },
+              { icon: <FiTarget className="mx-auto mb-2 text-peyara-secondary" size={32} />, value: "120+", label: "Campaigns Funded" },
+              { icon: <FiDollarSign className="mx-auto mb-2 text-peyara-primary" size={32} />, value: "$50K+", label: "Total Raised" },
+              { icon: <FiHeart className="mx-auto mb-2 text-peyara-secondary" size={32} />, value: "1000+", label: "Contributions" },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="bg-white rounded-xl p-6 border border-peyara-accent shadow-sm"
+              >
+                {stat.icon}
+                <p className="text-3xl font-bold text-peyara-dark">{stat.value}</p>
+                <p className="text-gray-600 text-sm">{stat.label}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -314,7 +334,13 @@ export default function HomePage() {
 
       {/* CTA */}
       <section className="bg-peyara-dark py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto px-4 text-center"
+        >
           <h2 className="text-3xl font-bold text-white mb-4">
             Ready to Make a Difference?
           </h2>
@@ -327,7 +353,7 @@ export default function HomePage() {
           >
             {user ? "Go to Dashboard" : "Get Started Free"}
           </Link>
-        </div>
+        </motion.div>
       </section>
     </div>
   );
