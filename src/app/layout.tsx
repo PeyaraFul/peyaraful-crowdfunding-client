@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 
 const geistSans = Geist({
@@ -34,12 +35,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
         <AuthProvider>
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
           <ToastContainer position="top-right" autoClose={3000} />
         </AuthProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

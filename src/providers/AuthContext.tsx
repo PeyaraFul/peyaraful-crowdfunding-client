@@ -18,6 +18,7 @@ interface AuthContextType {
   loading: boolean;
   login: (email: string, password: string) => Promise<User | null>;
   register: (name: string, email: string, password: string, photo: string, role: string) => Promise<User | null>;
+  googleLogin: (credential: string, role?: string) => Promise<User | null>;
   logout: () => void;
   setUser: (user: User | null) => void;
 }
@@ -104,6 +105,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const googleLogin = async (credential: string, role?: string): Promise<User | null> => {
+    try {
+      const res = await axiosInstance.post("/auth/google", { credential, role });
+      localStorage.setItem("access-token", res.data.token);
+      setUser(res.data.user);
+      toast.success("Login successful!");
+      return res.data.user;
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Google login failed.");
+      return null;
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("access-token");
     setUser(null);
@@ -111,7 +125,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, setUser }}>
+    <AuthContext.Provider value={{ user, loading, login, register, googleLogin, logout, setUser }}>
       {children}
     </AuthContext.Provider>
   );
