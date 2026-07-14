@@ -15,18 +15,24 @@ const banners = [
     subtitle: "Support creative projects and bring ideas to life",
     bg: "bg-peyara-primary",
     text: "text-peyara-dark",
+    primaryBtn: { label: "Explore Campaigns", href: "/explore" },
+    secondaryBtn: { label: "Get Started", href: "/register" },
   },
   {
     title: "Be a Creator",
     subtitle: "Share your vision with the world and get funded",
     bg: "bg-peyara-secondary",
     text: "text-white",
+    primaryBtn: { label: "Start Creating", href: "/register" },
+    secondaryBtn: { label: "View Campaigns", href: "/explore" },
   },
   {
     title: "Make an Impact",
     subtitle: "Every contribution counts toward something amazing",
     bg: "bg-peyara-accent",
     text: "text-peyara-dark",
+    primaryBtn: { label: "Back a Project", href: "/explore" },
+    secondaryBtn: { label: "Join Now", href: "/register" },
   },
 ];
 
@@ -91,16 +97,16 @@ export default function HomePage() {
                   <p className="text-lg md:text-xl mb-8 opacity-90">{banner.subtitle}</p>
                   <div className="flex gap-4 justify-center">
                     <Link
-                      href="/explore"
+                      href={banner.primaryBtn.href}
                       className="px-8 py-3 bg-white text-peyara-dark rounded-lg hover:bg-peyara-bg transition font-semibold"
                     >
-                      Explore
+                      {banner.primaryBtn.label}
                     </Link>
                     <Link
-                      href="/register"
+                      href={banner.secondaryBtn.href}
                       className="px-8 py-3 border-2 border-current rounded-lg hover:bg-white/20 transition font-semibold"
                     >
-                      Get Started
+                      {banner.secondaryBtn.label}
                     </Link>
                   </div>
                 </div>
