@@ -2,8 +2,8 @@
 
 A full-stack crowdfunding platform built with the MERN stack, enabling creators to launch campaigns and supporters to back them with a credit-based system.
 
-**Live Client:** https://peyaraful-crowdfunding.netlify.app
-**Live Server:** https://peyaraful-crowdfunding-server.onrender.com
+**Live Client:** https://peyaraful-crowdfunding-client.vercel.app
+**Live Server:** https://peyaraful-crowdfunding-server.vercel.app
 
 ## Admin Credentials
 
