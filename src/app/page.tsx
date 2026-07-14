@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import axiosInstance from "@/lib/axios";
 import { FiTarget, FiUsers, FiDollarSign, FiHeart } from "react-icons/fi";
+import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
 
 const banners = [
@@ -69,6 +70,7 @@ const categories = [
 ];
 
 export default function HomePage() {
+  const { user } = useAuth();
   const [topCampaigns, setTopCampaigns] = useState<any[]>([]);
 
   useEffect(() => {
@@ -103,10 +105,10 @@ export default function HomePage() {
                       {banner.primaryBtn.label}
                     </Link>
                     <Link
-                      href={banner.secondaryBtn.href}
+                      href={user ? (user.role === "admin" ? "/dashboard/admin-home" : user.role === "creator" ? "/dashboard/creator-home" : "/dashboard/supporter-home") : banner.secondaryBtn.href}
                       className="px-8 py-3 border-2 border-current rounded-lg hover:bg-white/20 transition font-semibold"
                     >
-                      {banner.secondaryBtn.label}
+                      {user ? "Dashboard" : banner.secondaryBtn.label}
                     </Link>
                   </div>
                 </div>
@@ -320,10 +322,10 @@ export default function HomePage() {
             Join Peyaraful Crowdfunding today and help bring creative visions to life.
           </p>
           <Link
-            href="/register"
+            href={user ? (user.role === "admin" ? "/dashboard/admin-home" : user.role === "creator" ? "/dashboard/creator-home" : "/dashboard/supporter-home") : "/register"}
             className="px-8 py-3 bg-peyara-primary text-peyara-dark rounded-lg hover:bg-white transition font-semibold text-lg"
           >
-            Get Started Free
+            {user ? "Go to Dashboard" : "Get Started Free"}
           </Link>
         </div>
       </section>
