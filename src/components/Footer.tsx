@@ -1,4 +1,4 @@
-import { FiGithub, FiTwitter, FiFacebook, FiInstagram } from "react-icons/fi";
+import { FiGithub, FiFacebook, FiLinkedin } from "react-icons/fi";
 
 export default function Footer() {
   return (
@@ -45,22 +45,20 @@ export default function Footer() {
                 <FiGithub size={20} />
               </a>
               <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-peyara-primary hover:text-peyara-dark transition"
-              >
-                <FiTwitter size={20} />
-              </a>
-              <a
-                href="#"
+                href="https://www.facebook.com/arakash022"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-peyara-primary hover:text-peyara-dark transition"
               >
                 <FiFacebook size={20} />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/md-akash-mia-bd"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-peyara-primary hover:text-peyara-dark transition"
               >
-                <FiInstagram size={20} />
+                <FiLinkedin size={20} />
               </a>
             </div>
           </div>
