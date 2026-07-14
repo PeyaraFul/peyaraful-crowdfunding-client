@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
+import { GoogleLogin } from "@react-oauth/google";
+import { toast } from "react-toastify";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -12,7 +14,7 @@ export default function RegisterPage() {
   const [photo, setPhoto] = useState("");
   const [role, setRole] = useState("supporter");
   const [loading, setLoading] = useState(false);
-  const { register } = useAuth();
+  const { register, googleLogin } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -121,6 +123,51 @@ export default function RegisterPage() {
             {loading ? "Creating account..." : "Register"}
           </button>
         </form>
+
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-peyara-accent" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="bg-white px-2 text-gray-400">or</span>
+            </div>
+          </div>
+
+          <div className="mt-4 flex justify-center">
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                if (credentialResponse.credential) {
+                  setLoading(true);
+                  try {
+                    const googleUser = await googleLogin(credentialResponse.credential, role);
+                    if (googleUser) {
+                      const redirectMap: Record<string, string> = {
+                        supporter: "/dashboard/supporter-home",
+                        creator: "/dashboard/creator-home",
+                      };
+                      router.push(redirectMap[googleUser.role] || "/");
+                      router.refresh();
+                    }
+                  } finally {
+                    setLoading(false);
+                  }
+                }
+              }}
+              onError={() => {
+                toast.error("Google sign-up failed. Please try again.");
+              }}
+              theme="outline"
+              size="large"
+              width="100%"
+              text="signup_with"
+              shape="rectangular"
+            />
+          </div>
+          <p className="text-xs text-gray-400 text-center mt-2">
+            Role selected above will be used for Google sign-up
+          </p>
+        </div>
 
         <p className="text-center mt-6 text-sm text-gray-600">
           Already have an account?{" "}
