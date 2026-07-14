@@ -23,20 +23,17 @@ export default function ExplorePage() {
   ];
 
   useEffect(() => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    if (category !== "all") params.set("category", category);
+
     axiosInstance
-      .get("/campaigns/approved")
+      .get(`/campaigns/approved?${params.toString()}`)
       .then((res) => setCampaigns(res.data))
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
-
-  const filtered = campaigns.filter((c) => {
-    const matchSearch =
-      c.title.toLowerCase().includes(search.toLowerCase()) ||
-      c.creator_name.toLowerCase().includes(search.toLowerCase());
-    const matchCategory = category === "all" || c.category === category;
-    return matchSearch && matchCategory;
-  });
+  }, [search, category]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -83,9 +80,9 @@ export default function ExplorePage() {
             </div>
           ))}
         </div>
-      ) : filtered.length > 0 ? (
+      ) : campaigns.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((campaign) => {
+          {campaigns.map((campaign) => {
             const progress = Math.min(
               (campaign.amount_raised / campaign.funding_goal) * 100,
               100
